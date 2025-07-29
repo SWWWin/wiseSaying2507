@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static java.lang.Integer.parseInt;
+
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -32,6 +34,20 @@ public class Main {
                 for(wiseSaying w : wiseSayings){
                     System.out.println(w.getId() + " / " + w.getAuthor() + " / " + w.getWiseSaying());
                 }
+            } else if((str.substring(0,6)).equals("삭제?id=")) {
+                int findId = parseInt(str.substring(6, str.length()));
+                System.out.println(findId);
+
+                for (int i = 0; i < wiseSayings.size(); i++) {
+                    if(wiseSayings.get(i).getId() == findId){
+                        wiseSayings.remove(i);
+                        System.out.println(findId + "번 명언이 삭제되엇습니다.");
+                        break;
+                    }
+                }
+
+
+
             }
         }
     }

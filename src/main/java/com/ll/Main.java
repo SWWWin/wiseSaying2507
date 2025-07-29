@@ -12,6 +12,13 @@ public class Main {
             System.out.print("명령) ");
             String str = sc.nextLine().trim();
             if(str.equals("종료")) break;
+            else if(str.equals("등록")){
+                System.out.print("명언 : ");
+                String wiseSaying = sc.nextLine().trim();
+
+                System.out.print("작가 : ");
+                String author = sc.nextLine().trim();
+            }
         }
     }
 }

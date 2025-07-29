@@ -36,7 +36,7 @@ public class Main {
                 }
             } else if((str.substring(0,6)).equals("삭제?id=")) {
                 int findId = parseInt(str.substring(6, str.length()));
-                System.out.println(findId);
+
 
                 boolean isExist = wiseSayings.stream()
                         .anyMatch(wiseSaying -> wiseSaying.getId() == findId);
@@ -52,10 +52,35 @@ public class Main {
                 } else {
                     System.out.println(findId + "번 명언은 존재하지 않습니다.");
                 }
+            }
+
+            else if((str.substring(0,6)).equals("수정?id=")) {
+                int findId = parseInt(str.substring(6, str.length()));
 
 
+                boolean isExist = wiseSayings.stream()
+                        .anyMatch(wiseSaying -> wiseSaying.getId() == findId);
 
+                if(isExist) {
+                    for (int i = 0; i < wiseSayings.size(); i++) {
+                        if(wiseSayings.get(i).getId() == findId){
+                            System.out.println("명언(기존): " + wiseSayings.get(i).getWiseSaying());
+                            System.out.print("명언 : ");
+                            String newWiseSaying = sc.nextLine().trim();
+                            System.out.println("작가(기존: "+ wiseSayings.get(i).getAuthor());
+                            System.out.print("작가 : ");
+                            String newAuthor = sc.nextLine().trim();
 
+                            wiseSayings.get(i).setWiseSaying(newWiseSaying);
+                            wiseSayings.get(i).setAuthor(newAuthor);
+
+                            System.out.println(findId + "번 명언이 삭제되엇습니다.");
+                            break;
+                        }
+                    }
+                } else {
+                    System.out.println(findId + "번 명언은 존재하지 않습니다.");
+                }
             }
         }
     }

@@ -38,13 +38,21 @@ public class Main {
                 int findId = parseInt(str.substring(6, str.length()));
                 System.out.println(findId);
 
-                for (int i = 0; i < wiseSayings.size(); i++) {
-                    if(wiseSayings.get(i).getId() == findId){
-                        wiseSayings.remove(i);
-                        System.out.println(findId + "번 명언이 삭제되엇습니다.");
-                        break;
+                boolean isExist = wiseSayings.stream()
+                        .anyMatch(wiseSaying -> wiseSaying.getId() == findId);
+
+                if(isExist) {
+                    for (int i = 0; i < wiseSayings.size(); i++) {
+                        if(wiseSayings.get(i).getId() == findId){
+                            wiseSayings.remove(i);
+                            System.out.println(findId + "번 명언이 삭제되엇습니다.");
+                            break;
+                        }
                     }
+                } else {
+                    System.out.println(findId + "번 명언은 존재하지 않습니다.");
                 }
+
 
 
 

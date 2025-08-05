@@ -1,19 +1,22 @@
 package com.ll;
 
+import com.ll.domain.system.SystemController;
+import com.ll.domain.wiseSaying.WiseSayingController;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class App {
     private final Scanner sc = new Scanner(System.in);
-    int wiseSayingCount = 1;
-
     private final List<WiseSaying> wiseSayings = new ArrayList<>();
 
     void run() {
 
         System.out.println("== 명언 앱 ==");
 
+        SystemController systemController = new SystemController();
+        WiseSayingController wiseSayingController = new WiseSayingController(sc);
         while (true) {
             System.out.print("명령) ");
             String str = sc.nextLine().trim();
@@ -22,86 +25,21 @@ public class App {
 
             switch (rq.getActionName()) {
                 case "종료" -> {
-                    System.out.println("== 명언 앱을 종료합니다. ==");
+                    systemController.actionExit();
                 return;
             }
 
-                case "등록" -> actionWrite();
+                case "등록" -> wiseSayingController.actionWrite();
 
-                case "목록" -> actionList();
-                case "삭제" -> actionDelete(rq);
+                case "목록" -> wiseSayingController.actionList();
+                case "삭제" -> wiseSayingController.actionDelete(rq);
 
-                case "수정" -> actionChange(rq);
+                case "수정" -> wiseSayingController.actionChange(rq);
 
             }
         }
     }
 
-    void actionWrite() {
-        System.out.print("명언 : ");
-        String wiseSaying = sc.nextLine().trim();
 
-        System.out.print("작가 : ");
-        String author = sc.nextLine().trim();
-        System.out.println(wiseSayingCount + "번 명언이 등록되었습니다.");
-        wiseSayings.add(new WiseSaying(wiseSayingCount, wiseSaying, author));
-        wiseSayingCount++;
-    }
-
-    void actionList() {
-        System.out.println("번호 / 작가 / 명언");
-        System.out.println("---------------------");
-        for (WiseSaying w : wiseSayings) {
-            System.out.println(w.getId() + " / " + w.getAuthor() + " / " + w.getWiseSaying());
-        }
-    }
-
-    void actionDelete(Rq rq) {
-
-        int findId = rq.getParamAsInt("id", -1);
-
-        boolean isExist = wiseSayings.stream()
-                .anyMatch(wiseSaying -> wiseSaying.getId() == findId);
-
-        if (isExist) {
-            for (int i = 0; i < wiseSayings.size(); i++) {
-                if (wiseSayings.get(i).getId() == findId) {
-                    wiseSayings.remove(i);
-                    System.out.println(findId + "번 명언이 삭제되엇습니다.");
-                    break;
-                }
-            }
-        } else {
-            System.out.println(findId + "번 명언은 존재하지 않습니다.");
-        }
-    }
-
-    void actionChange(Rq rq) {
-
-        int findId = rq.getParamAsInt("id", -1);
-        boolean isExist = wiseSayings.stream()
-                .anyMatch(wiseSaying -> wiseSaying.getId() == findId);
-
-        if (isExist) {
-            for (int i = 0; i < wiseSayings.size(); i++) {
-                if (wiseSayings.get(i).getId() == findId) {
-                    System.out.println("명언(기존): " + wiseSayings.get(i).getWiseSaying());
-                    System.out.print("명언 : ");
-                    String newWiseSaying = sc.nextLine().trim();
-                    System.out.println("작가(기존: " + wiseSayings.get(i).getAuthor());
-                    System.out.print("작가 : ");
-                    String newAuthor = sc.nextLine().trim();
-
-                    wiseSayings.get(i).setWiseSaying(newWiseSaying);
-                    wiseSayings.get(i).setAuthor(newAuthor);
-
-                    System.out.println(findId + "번 명언이 삭제되엇습니다.");
-                    break;
-                }
-            }
-        } else {
-            System.out.println(findId + "번 명언은 존재하지 않습니다.");
-        }
-    }
 }
 

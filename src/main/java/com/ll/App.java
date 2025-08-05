@@ -34,7 +34,7 @@ public class App {
                 case "목록" -> wiseSayingController.actionList();
                 case "삭제" -> wiseSayingController.actionDelete(rq);
 
-                case "수정" -> wiseSayingController.actionChange(rq);
+                case "수정" -> wiseSayingController.actionModify(rq);
 
             }
         }

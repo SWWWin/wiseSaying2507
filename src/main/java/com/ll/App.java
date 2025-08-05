@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static java.lang.Integer.parseInt;
-
 public class App {
-    Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
     int wiseSayingCount = 1;
 
-    List<WiseSaying> wiseSayings = new ArrayList<>();
+    private final List<WiseSaying> wiseSayings = new ArrayList<>();
 
     void run() {
 
@@ -19,17 +17,22 @@ public class App {
         while (true) {
             System.out.print("명령) ");
             String str = sc.nextLine().trim();
-            if (str.equals("종료")) break;
-            else if (str.equals("등록")) {
-                actionWrite();
-            } else if (str.equals("목록")) {
-                actionList();
-            } else if ((str.substring(0, 6)).equals("삭제?id=")) {
-                int findId = parseInt(str.substring(6, str.length()));
-                actionDelete(findId);
-            } else if ((str.substring(0, 6)).equals("수정?id=")) {
-                int findId = parseInt(str.substring(6, str.length()));
-                actionChange(findId);
+
+            Rq rq = new Rq(str);
+
+            switch (rq.getActionName()) {
+                case "종료" -> {
+                    System.out.println("== 명언 앱을 종료합니다. ==");
+                return;
+            }
+
+                case "등록" -> actionWrite();
+
+                case "목록" -> actionList();
+                case "삭제" -> actionDelete(rq);
+
+                case "수정" -> actionChange(rq);
+
             }
         }
     }
@@ -53,7 +56,9 @@ public class App {
         }
     }
 
-    void actionDelete(int findId) {
+    void actionDelete(Rq rq) {
+
+        int findId = rq.getParamAsInt("id", -1);
 
         boolean isExist = wiseSayings.stream()
                 .anyMatch(wiseSaying -> wiseSaying.getId() == findId);
@@ -71,9 +76,9 @@ public class App {
         }
     }
 
-    void actionChange(int findId) {
+    void actionChange(Rq rq) {
 
-
+        int findId = rq.getParamAsInt("id", -1);
         boolean isExist = wiseSayings.stream()
                 .anyMatch(wiseSaying -> wiseSaying.getId() == findId);
 

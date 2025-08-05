@@ -36,7 +36,7 @@ public class Rq {
 
         params = Arrays.stream(queryString.split("&"))
                 .map(e -> e.split("=", 2))
-                .filter(e -> e.length == 2 && !e[0].isBlank() && !e[1].isBlank())
+                .filter(e -> e.length > 0 && !e[0].isBlank() && !e[1].isBlank())
                 .collect(Collectors.toMap(e -> e[0], e-> e[1]));
 
     }

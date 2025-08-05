@@ -5,21 +5,19 @@ import com.ll.domain.wiseSaying.WiseSayingController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class App {
-    private final Scanner sc = new Scanner(System.in);
     private final List<WiseSaying> wiseSayings = new ArrayList<>();
 
     void run() {
 
         System.out.println("== 명언 앱 ==");
 
-        SystemController systemController = new SystemController();
-        WiseSayingController wiseSayingController = new WiseSayingController(sc);
+        SystemController systemController = AppContext.systemController;
+        WiseSayingController wiseSayingController = AppContext.wiseSayingController;
         while (true) {
             System.out.print("명령) ");
-            String str = sc.nextLine().trim();
+            String str = AppContext.scanner.nextLine().trim();
 
             Rq rq = new Rq(str);
 

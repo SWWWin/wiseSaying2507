@@ -9,19 +9,20 @@ public class WiseSaying {
     private String author;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
-    private DateTimeFormatter forPrintDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
+    private DateTimeFormatter forPrintDateTimeFormatter = AppContext.forPrintDateTimeFormatter;
     public WiseSaying(String wiseSaying, String author) {
         this.wiseSaying = wiseSaying;
         this.author = author;
     }
+
+
 
     public int getId() {return id;}
     public String getWiseSaying() { return wiseSaying; }
     public String getAuthor() { return author; }
     public String getCreateDate() { 
         return createDate.format(forPrintDateTimeFormatter); }
-    public String getModifyDate() { 
+    public String getModifyDate() {
         return modifyDate.format(forPrintDateTimeFormatter); }
     public String getForPrintCreateDate() {
         return createDate.format(forPrintDateTimeFormatter);
